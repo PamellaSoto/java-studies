@@ -23,7 +23,6 @@ public class UserController {
   @PostMapping
   public ResponseEntity create(@RequestBody UserModel userModel) {
     var user = this.userRepository.findByUsername(userModel.getUsername());
-    System.out.println(user);
 
     if (user != null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)

@@ -29,6 +29,7 @@ public class UserModel {
   /* @Column is responsible for :
     creating a name for the column
     adding constraints
+    limiting length of attributes
   */
   @Column(unique= true)
   private String username;
