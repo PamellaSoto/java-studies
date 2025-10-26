@@ -1,7 +1,5 @@
 package com.studies.spring_boot.users;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 // Public / Private / Protected
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
 
   // responsible for the life cycle
@@ -20,7 +20,7 @@ public class UserController {
   private IUserRepository userRepository;
 
   // @RequestBody -> annotation to have the request body read into an Object object
-  @PostMapping
+  @PostMapping("/register")
   public ResponseEntity create(@RequestBody UserModel userModel) {
     var user = this.userRepository.findByUsername(userModel.getUsername());
 
@@ -31,8 +31,8 @@ public class UserController {
     var passwordHash = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
     userModel.setPassword(passwordHash);
     
-    var userCreated = this.userRepository.save(userModel);
+    this.userRepository.save(userModel);
     return ResponseEntity.status(HttpStatus.CREATED)
-                         .body(userCreated);
+                         .body("New user created.");
   }
 }

@@ -27,7 +27,7 @@ public class ExpenseController {
   @Autowired
   private IUserRepository userRepository;
 
-  @PostMapping
+  @PostMapping("/new")
   public ResponseEntity create(@RequestBody ExpenseModel expenseModel, HttpServletRequest request) {
     UUID userId = (UUID) request.getAttribute("userId");
 
